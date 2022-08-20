@@ -1,32 +1,34 @@
-import { IonAvatar, IonContent, IonHeader, IonImg, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import { useEffect, useState } from 'react';
-import './Home.css';
+import {
+  IonAvatar,
+  IonContent,
+  IonHeader,
+  IonImg,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/react";
+import "./Home.css";
+import { useData } from "../hooks/useData";
 
 const Home: React.FC = () => {
-
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const loadData = async () => {
-      const uri = 'https://randomuser.me/api/?page=1&results=50&seed=devdactic';
-      const data = await fetch(uri);
-      const dataJSON = await data.json();
-      setData(dataJSON.results);
-    }
-    loadData();
-  },[])
+  const { data } = useData();
 
   return (
+    // Pagina inicial do aplicativo
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Blank</IonTitle>
         </IonToolbar>
       </IonHeader>
+      {/* // Contenido de la pagina */}
       <IonContent fullscreen>
         <IonList>
-          {data.map((item:any, index) => (
-            <IonItem key={index}>
+          {data.map((item: any, index) => (
+            <IonItem key={index} routerLink={`home/details/${item.email}`}>
               <IonAvatar slot="start">
                 <IonImg src={item.picture.thumbnail} />
               </IonAvatar>
